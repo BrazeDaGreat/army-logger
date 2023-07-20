@@ -169,15 +169,31 @@ Modal.create(
 async function loadFromFile() {
 
   let desc = `
-  
+  <select class="form-select" aria-label="Database Select" id="dbType">
+    <option selected value="t1">Basic Information</option>
+    <option value="t2">Courses</option>
+    <option value="t3">Relations</option>
+    <option value="t4">Reports</option>
+    <option value="t5">Remarks</option>
+    <option value="t6">Leaves</option>
+  </select>
+  <hr>
+  <div class="input-group mb-3">
+    <input type="file" class="form-control" id="dbFile" accept=".csv">
+  </div>
   `;
+  
 
   Modal.create(
     ["Import from CSV"],
-    desc,
+    [desc],
     [
       Modal.button("Import", "btn-outline-info", "modalImport", async () => {
+        let inputfile = document.getElementById("dbFile").files;
+        let dbType = document.getElementById("dbType").value;
+        let path = inputfile[0].path
 
+        await node.load(dbType, path)
       }),
       Modal.close("Cancel")
     ]
