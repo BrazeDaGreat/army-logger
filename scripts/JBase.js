@@ -25,6 +25,7 @@ class JBase {
   }
 
   async initialize() {
+    console.log('Initialized', this.filename)
     try {
       this.decryptFile()
 
@@ -77,6 +78,7 @@ class JBase {
   }
 
   async read(collectionName, query = {}) {
+    console.log('read called')
     const collection = this.db[collectionName] || [];
 
     // Apply the query filter
@@ -88,7 +90,8 @@ class JBase {
       }
       return true;
     });
-
+    
+    console.log(filteredItems)
     return filteredItems;
   }
 

@@ -1,0 +1,34 @@
+{
+  "t6": [
+    {
+      "ID": 101,
+      "Date Left": 1662663600,
+      "Date Back": 1662836400,
+      "Location": "Moscow"
+    },
+    {
+      "ID": 101,
+      "Date Left": 1662922800,
+      "Date Back": "-",
+      "Location": "Unit"
+    },
+    {
+      "ID": 102,
+      "Date Left": 1631300400,
+      "Date Back": 1632078000,
+      "Location": "Abu Dhabi"
+    },
+    {
+      "ID": 102,
+      "Date Left": 1632164400,
+      "Date Back": "-",
+      "Location": "Unit"
+    },
+    {
+      "ID": 103,
+      "Date Left": 1689793200,
+      "Date Back": 1690225200,
+      "Location": "Abu Dhabi"
+    }
+  ]
+}

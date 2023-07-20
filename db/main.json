@@ -89,7 +89,44 @@
       "Year": 2022
     }
   ],
-  "t3": [],
+  "t3": [
+    {
+      "ID": 101,
+      "Name": "Uzair Jr.",
+      "Relation": "Child",
+      "Gender": "Male",
+      "DOB": 1282244400,
+      "Occupation": "Student",
+      "Note": "-"
+    },
+    {
+      "ID": 102,
+      "Name": "Mrs. Shuzair",
+      "Relation": "Spouse",
+      "Gender": "Female",
+      "DOB": 1258070400,
+      "Occupation": "Housewife",
+      "Note": "-"
+    },
+    {
+      "ID": 103,
+      "Name": "Buzair Sr.",
+      "Relation": "Father",
+      "Gender": "Male",
+      "DOB": 873572400,
+      "Occupation": "Retired Army",
+      "Note": "Disabled"
+    },
+    {
+      "ID": 104,
+      "Name": "Aiman",
+      "Relation": "Sister",
+      "Gender": "Female",
+      "DOB": 1361905200,
+      "Occupation": "Student",
+      "Note": "-"
+    }
+  ],
   "t4": [],
   "t5": [],
   "t6": []

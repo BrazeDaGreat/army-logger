@@ -139,6 +139,7 @@ function generateLeaveStats(obj) {
  */
 async function render() {
   const leaveData = await node.call('read', 't6');
+  console.log(leaveData)
   generateLeaveStats(leaveData);
 
   const userData = await node.call('read', 't1');

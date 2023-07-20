@@ -1,6 +1,6 @@
 async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], attr="", feedable=true) {
     const data = await node.call('read', collection, qu, {});
-    console.log(data)
+    // console.log(data)
     if (data.length == 0) return
     const element = document.getElementById(id);
   
@@ -28,6 +28,7 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
   
       // Generate table rows
       for (const item of data) {
+        console.log(item)
         tableHTML += '<tr>';
         if (sessionStorage.getItem('permissions').includes("@admin")) {
           tableHTML += `
@@ -40,6 +41,7 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
           `
 
         }
+
         for (const key in item) {
           
           if (omit.includes(key)) { continue }

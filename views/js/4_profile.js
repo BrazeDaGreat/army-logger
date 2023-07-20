@@ -13,7 +13,7 @@ function showProfile(id) {
  */
 async function loadData() {
   const id = sessionStorage.getItem("profile");
-  const t1 = await node.call('read', 't1', { ID: id });
+  const t1 = await node.call('read', 't1', { ID: Number(id) });
   console.log(t1);
   const profileData = t1[0];
 
@@ -35,11 +35,11 @@ async function loadData() {
   // setValue("valueNote", profileData["Note"]);
   setValue("valueRank", profileData["Rank"]);
   setValue("valuePerma", profileData["Permanent Address"]);
-  setValue("valueNo", profileData["Phone No#"]);
+  setValue("valueNo", profileData["Phone"]);
 
-  displayTable('t2', 't2', { ID: id }, ["ID"], "class='table table-bordered'");
-  displayTable('t3', 't3', { ID: id }, ["ID"], "class='table table-bordered'");
-  displayTable('t4', 't4', { ID: id }, ["ID"], "class='table table-bordered'");
-  displayTable('t5', 't5', { ID: id }, ["ID"], "class='table table-bordered'", false);
-  displayTable('t6', 't6', { ID: id }, ["ID"], "class='table table-bordered'");
+  displayTable('t2', 't2', { ID: Number(id) }, ["ID"], "class='table table-bordered'");
+  displayTable('t3', 't3', { ID: Number(id) }, ["ID"], "class='table table-bordered'");
+  displayTable('t4', 't4', { ID: Number(id) }, ["ID"], "class='table table-bordered'");
+  displayTable('t5', 't5', { ID: Number(id) }, ["ID"], "class='table table-bordered'", false);
+  displayTable('t6', 't6', { ID: Number(id) }, ["ID"], "class='table table-bordered'");
 }
