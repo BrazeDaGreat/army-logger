@@ -1,5 +1,5 @@
-ID	Name	Rank	BTY	DOB	DOE	Phone	Current Address	Permanent Address
-101	Uzair	General	battery1	9/20/2006	9/20/2011	12345678901	Dubai	Islamabad
-102	Shuzair	Major	battery1	10/20/2008	10/20/2013	12345678901	Dubai	Islamabad
-103	Buzair	Col.	battery1	5/10/2003	5/10/2007	12345678901	Faisalabad	Islamabad
-104	Umair	Brgdr.	battery1	4/23/2000	3/23/2005	12345678901	Abu Dhabi	Islamabad
+ID,Name,Rank,BTY,DOB,DOE,Phone,Current Address,Permanent Address
+101,Uzair,General,battery1,9/20/2006,9/20/2011,12345678901,Dubai,Islamabad
+102,Shuzair,Major,battery1,10/20/2008,10/20/2013,12345678901,Dubai,Islamabad
+103,Buzair,Col.,battery1,5/10/2003,5/10/2007,12345678901,Faisalabad,Islamabad
+104,Umair,Brgdr.,battery1,4/23/2000,3/23/2005,12345678901,Abu Dhabi,Islamabad
