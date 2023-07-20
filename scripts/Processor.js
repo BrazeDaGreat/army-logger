@@ -21,7 +21,7 @@ function convertDatesToUnixTimestamps(obj) {
     return obj;
   }
 
-function process(file, db) {
+function process(file, dbType, db) {
     let data = fs.readFileSync(`csv/${file}.csv`, 'utf8').toString()
         .replace(/\r/g, "");
         // .split("\n");
@@ -38,7 +38,7 @@ function process(file, db) {
     data.forEach(async elmnt => {
         // await db[file].create(elmnt)
         elmnt = convertDatesToUnixTimestamps(elmnt)
-        await db.create(file, elmnt)
+        await db.create(dbType, elmnt)
     });
 }
 

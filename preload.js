@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld('node', {
     json: () => db,
     call: (fn, ...parameters) => db[fn](...parameters),
     creds: (fn, ...parameters) => creds[fn](...parameters),
-    load: (file) => Processor.process(file, db)
+    load: (file, dbType) => Processor.process(file, dbType, db)
     // requireFunc: (r) => require(r)
     // jbase: (path) => {return new JBase(path)}
 })
