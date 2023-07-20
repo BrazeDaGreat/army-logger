@@ -193,7 +193,7 @@ async function loadFromFile() {
         let dbType = document.getElementById("dbType").value;
         let path = inputfile[0].path
 
-        await node.load(dbType, path)
+        await node.load(path, dbType)
       }),
       Modal.close("Cancel")
     ]

@@ -40,13 +40,10 @@ class JBase {
   }
 
   async saveDatabase() {
-    // const jsonData = JSON.stringify(this.db, null, 2);
-    // const encryptedData = this.encrypt(jsonData);
-    // await fs.writeFile(this.filename, encryptedData, 'utf-8');
-    // this.db = this.decrypt(encryptedData);
     this.decryptFile()
     const jsonData = JSON.stringify(this.db, null, 2)
     await fs.writeFile(this.filename, jsonData, 'utf-8')
+    console.log('Saved')
     this.encryptFile()
   }
 

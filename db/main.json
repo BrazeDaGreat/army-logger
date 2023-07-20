@@ -1,33 +1,6 @@
 {
   "t1": [
     {
-      "ID": "123",
-      "Name": "Uzair",
-      "Rank": "Major",
-      "BTY": "BATTERY",
-      "DOB": "1127174400",
-      "DOE": "1356134400",
-      "Phone": "+92 333 33333 33",
-      "Current Address": "Bahawalpur",
-      "Permanent Address": "Islamabad",
-      "$id": "e35e61bb-6ff3-4a57-9b4d-0f2b004537fc",
-      "$createdAt": "2023-06-03T13:03:26.621Z",
-      "$updatedAt": "2023-06-21T16:49:35.416Z"
-    },
-    {
-      "ID": "256",
-      "Name": "Braze",
-      "Rank": "General",
-      "BTY": "BATTERY",
-      "DOB": "1158776100",
-      "DOE": "1285006500",
-      "Phone": "+92 333 33333 33",
-      "Current Address": "Rawalpindi",
-      "Permanent Address": "Islamabad",
-      "$id": "87b89478-0970-4d4f-9bba-1c5bfda6b9d3",
-      "$createdAt": "2023-06-03T13:03:26.624Z"
-    },
-    {
       "ID": 101,
       "Name": "Uzair",
       "Rank": "General",
@@ -36,9 +9,7 @@
       "DOE": 1316458800,
       "Phone": 12345678901,
       "Current Address": "Dubai",
-      "Permanent Address": "Islamabad",
-      "$id": "9498a41d-fdd7-466d-87f4-627562b6469b",
-      "$createdAt": "2023-07-13T08:32:40.762Z"
+      "Permanent Address": "Islamabad"
     },
     {
       "ID": 102,
@@ -49,9 +20,7 @@
       "DOE": 1382227200,
       "Phone": 12345678901,
       "Current Address": "Dubai",
-      "Permanent Address": "Islamabad",
-      "$id": "6ae78fd6-aedc-460c-9e1b-98c5bdc47097",
-      "$createdAt": "2023-07-13T08:32:40.769Z"
+      "Permanent Address": "Islamabad"
     },
     {
       "ID": 103,
@@ -62,9 +31,7 @@
       "DOE": 1178737200,
       "Phone": 12345678901,
       "Current Address": "Faisalabad",
-      "Permanent Address": "Islamabad",
-      "$id": "de4f41f7-fe04-47d2-86df-2c8052a392ac",
-      "$createdAt": "2023-07-13T08:32:40.770Z"
+      "Permanent Address": "Islamabad"
     },
     {
       "ID": 104,
@@ -75,9 +42,7 @@
       "DOE": 1111518000,
       "Phone": 12345678901,
       "Current Address": "Abu Dhabi",
-      "Permanent Address": "Islamabad",
-      "$id": "3383c44e-23d4-47a3-ab74-b2f66bae27a8",
-      "$createdAt": "2023-07-13T08:32:40.771Z"
+      "Permanent Address": "Islamabad"
     }
   ],
   "t2": [
