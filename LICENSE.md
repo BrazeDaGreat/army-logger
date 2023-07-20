@@ -1,6 +1,6 @@
 Army Logger Software License
 
-Version 1.0, 20th July, 2023.
+Version 1.1, 20th July, 2023.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy, modify, and distribute the Software only for non-commercial purposes and subject to the following conditions:
 
@@ -16,9 +16,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 6. Termination: This license automatically and immediately terminates if you fail to comply with any of the terms and conditions stated herein. Upon termination, you must cease all use, distribution, and possession of the Software.
 
-7. Applicable Law: This license shall be governed by and construed in accordance with the laws of [Your Country/State/Region], without regard to its conflict of law principles.
-
-8. Entire Agreement: This license constitutes the entire agreement between the parties concerning the use of the Software and supersedes all prior or contemporaneous understandings.
+7. Entire Agreement: This license constitutes the entire agreement between the parties concerning the use of the Software and supersedes all prior or contemporaneous understandings.
 
 By using, copying, modifying, or distributing the Software, you acknowledge that you have read this license, understand it, and agree to be bound by its terms and conditions.
 
