@@ -1,6 +1,6 @@
 {
   "name": "armymanagement",
-  "version": "1.9.0",
+  "version": "0.10.0",
   "description": "Management software.",
   "main": "main.js",
   "scripts": {
