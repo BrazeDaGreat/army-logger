@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.etho {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.69);
+    background-color: #395B64;
+    width: 75%;
+}
+
+.idField {
+    width: 25%;
+    margin-right: 16px;
+    margin-left: 8px;
+}
+
+.break {
+    height: 4px;
+    background-color: #A5C9CA;
+    width: 256px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    border-radius: 32px;
+}

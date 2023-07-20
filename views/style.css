@@ -1,0 +1,37 @@
+:root {
+    --text: white;
+    --main: #2C3333;
+    --secondary: #395B64;
+    --accent: #A5C9CA;
+    --accent2: #E7F6F2;
+}
+
+body {
+    background-color: var(--main);
+    color: var(--text);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.login-btn {
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+}
+.login-card {
+    background-color: var(--secondary);
+    color: var(--text);
+    border-color: var(--accent);
+}
+
+.card {
+    margin: 1vw;
+}
+
+temp {
+    margin-bottom: 2vh;
+}
+
+.profile-picture {
+    max-width: 200px;
+    max-height: 200px;
+}
