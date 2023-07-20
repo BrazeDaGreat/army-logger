@@ -194,6 +194,8 @@ async function loadFromFile() {
         let path = inputfile[0].path
 
         await node.load(path, dbType)
+
+        window.location.reload()
       }),
       Modal.close("Cancel")
     ]

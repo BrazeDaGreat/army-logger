@@ -29,7 +29,8 @@ function process(file, dbType, db) {
 
     data = convertCSVToArray(data, {
         header: false,
-        separator: '\t'
+        // separator: '\t'
+        separator: ','
     })
 
     console.log(data)
