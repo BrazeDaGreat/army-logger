@@ -127,7 +127,8 @@ async function createData(collection, fields) {
       Modal.button("Save", "btn-outline-warning", "modalSave", async () => {
         // await node.call('create', collection, getNewData(fields));
         await db.push(collection, getNewData(fields))
-        window.location.reload();
+        console.log( {collection, fields: getNewData(fields) } )
+        // window.location.reload();
       }),
       Modal.close("Cancel"),
     ]
