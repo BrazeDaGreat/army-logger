@@ -63,7 +63,8 @@ function getNewData(dat) {
  * @returns {Promise<void>} - A Promise that resolves when the update is complete.
  */
 async function updateData(collection, dat) {
-  await node.call("update", collection, dat, getNewData(dat));
+  // await node.call("update", collection, dat, getNewData(dat));
+  await db.update(collection, dat, getNewData(dat))
   window.location.reload();
 }
 
@@ -74,7 +75,8 @@ async function updateData(collection, dat) {
  * @returns {Promise<void>} - A Promise that resolves when the editing is complete.
  */
 async function editValues(collection, dat) {
-  const data = (await node.call("read", collection, dat))[0];
+  // const data = (await node.call("read", collection, dat))[0];
+  const data = (await db.read(collection))[0];
   const fields = Object.keys(data).slice(0, -2);
   if (fields.includes("$id")) {
     fields.pop();
@@ -122,7 +124,8 @@ async function createData(collection, fields) {
     ),
     [
       Modal.button("Save", "btn-outline-warning", "modalSave", async () => {
-        await node.call('create', collection, getNewData(fields));
+        // await node.call('create', collection, getNewData(fields));
+        await db.push(collection, getNewData(fields))
         window.location.reload();
       }),
       Modal.close("Cancel"),
@@ -156,7 +159,8 @@ Modal.create(
   desc,
   [
     Modal.button("Save", "btn-outline-warning", "modalSave", async () => {
-      await node.call('create', collection, getNewData(fields));
+      // await node.call('create', collection, getNewData(fields));
+      await db.push(collection, getNewData(fields))
       window.location.reload();
     }),
     Modal.close("Cancel"),

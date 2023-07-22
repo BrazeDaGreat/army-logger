@@ -138,12 +138,15 @@ function generateLeaveStats(obj) {
  * @returns {Promise<void>} - A Promise that resolves when the rendering is complete.
  */
 async function render() {
-  const leaveData = await node.call('read', 't6');
+  // const leaveData = await node.call('read', 't6');
+  const leaveData = await db.read('t6');
   console.log(leaveData)
   generateLeaveStats(leaveData);
 
-  const userData = await node.call('read', 't1');
-  const courseData = await node.call('read', 't2');
+  // const userData = await node.call('read', 't1');
+  const userData = await db.read('t1');
+  // const courseData = await node.call('read', 't2');
+  const courseData = await db.read('t2');
   setElement("userStats", `
     <div class="d-flex align-items-center">
       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">

@@ -1,5 +1,6 @@
 async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], attr="", feedable=true) {
-    const data = await node.call('read', collection, qu, {});
+    // const data = await node.call('read', collection, qu, {});
+    const data = await db.filter(collection, qu)
     // console.log(data)
     if (data.length == 0) return
     const element = document.getElementById(id);

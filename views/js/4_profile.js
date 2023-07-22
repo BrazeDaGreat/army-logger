@@ -13,7 +13,8 @@ function showProfile(id) {
  */
 async function loadData() {
   const id = sessionStorage.getItem("profile");
-  const t1 = await node.call('read', 't1', { ID: Number(id) });
+  // const t1 = await node.call('read', 't1', { ID: Number(id) });
+  const t1 = await db.filter('t1', { ID: Number(id) });
   console.log(t1);
   const profileData = t1[0];
 

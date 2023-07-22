@@ -1,228 +1,104 @@
-const fs = require('fs').promises;
-const crypto = require('crypto');
+/**
+ * JBase Version 3.0
+ * 
+ * This version uses quick.db alongside better-sqlite3.
+ */
+
+
+/* Importing QuickDB */
+const { QuickDB } = require("quick.db");
+
 
 class JBase {
-  constructor(filename = 'db.json', encryptionKey = '123_secret@098') {
-    this.db = {};
-    this.filename = filename;
-    this.encryptionKey = encryptionKey;
 
-    // this.encryptFile()
-    // this.salt = crypto.randomBytes(16); // Generate a random salt for key derivation
-    // this.key = crypto.pbkdf2Sync(this.encryptionKey, this.salt, 100000, 32, 'sha512');
+
+  constructor(filepath) {
+    this.filepath = filepath;
   }
 
-  encryptFile() {
-    // eFile(this.filename, this.encryptionKey)
-    // TODO: yes.
-    return;
+  intialize() {
+    this.db = new QuickDB({ filePath: this.filepath })
+    console.log('Initialized ', this.filepath)
   }
 
-  decryptFile() {
-    // deFile(this.filename, this.encryptionKey)
-    // TODO: yes.
-    return;
+
+  // Setters and Getters
+  async set(path, value) { return await this.db.set(path, value) }
+  async get(path) { return await this.db.get(path) }
+
+  // Array functions
+  async push(path, value) { return await this.db.push(path, value) }
+  async pull(path, value) { return await this.db.pull(path, value) }
+  async has (path, value) { return await this.db.has(path, value) }
+
+  // Filtering
+  async filter(path, filter) {
+    let dat = await this.get(path);
+    let ret = dat.filter(item => {
+      for (const key in filter) { if (item[key] !== filter[key]) { return false } }
+      return true
+    })
+    return ret;
   }
-
-  async initialize() {
-    console.log('Initialized', this.filename)
-    try {
-      this.decryptFile()
-
-      const data = await fs.readFile(this.filename, 'utf-8');
-      this.db = JSON.parse(data);
-
-      this.encryptFile()
-
-    } catch (err) {
-      this.db = {}
-      await this.saveDatabase()
-    }
+  // Checking whether a path exists or not
+  async exists(path) { return !(await this.get(path) == null) }
+  // Get and omit some fields
+  async getOmit(path, omit) {
+    let dat = await this.get(path)
+    return dat.map(item => {
+      return omit.reduce((acc, key) => {
+        if (item.hasOwnProperty(key)) {
+          acc[key] = item[key];
+        }
+        return acc;
+      }, {});
+    });
   }
-
-  async saveDatabase() {
-    this.decryptFile()
-    const jsonData = JSON.stringify(this.db, null, 2)
-    await fs.writeFile(this.filename, jsonData, 'utf-8')
-    console.log('Saved')
-    this.encryptFile()
+  // filterOmit
+  async filterOmit(path, filter, omit) {
+    let filtered = await this.filter(path, filter)
+    return filtered.map(item => {
+      return omit.reduce((acc, key) => {
+        if (item.hasOwnProperty(key)) {
+          acc[key] = item[key];
+        }
+        return acc;
+      }, {});
+    });
   }
+  // updating based on a filter query
+  async update(path, filter, newValues) {
 
-  async create(collectionName, item) {
-    if (!this.db[collectionName]) {
-      this.db[collectionName] = [];
-    }
-
-    const newItem = { ...item };
-
-    // Check for unique fields and throw an error if any duplicates found
-    const uniqueFields = Object.keys(newItem).filter((field) => field.startsWith('unique_'));
-    for (const field of uniqueFields) {
-      const value = newItem[field];
-      if (this.db[collectionName].some((existingItem) => existingItem[field] === value)) {
-        throw new Error(`Duplicate value for unique field "${field}"`);
-      }
-    }
-
-    // Encrypt fields marked for encryption (fields starting with "encrypt_")
-    for (const field in newItem) {
-      if (field.startsWith('encrypt_')) {
-        const encryptedValue = this.encrypt(newItem[field]);
-        newItem[field] = encryptedValue;
-      }
-    }
-
-    this.db[collectionName].push(newItem);
-    await this.saveDatabase();
-    return newItem;
-  }
-
-  async read(collectionName, query = {}) {
-    console.log('read called')
-    const collection = this.db[collectionName] || [];
-
-    // Apply the query filter
-    const filteredItems = collection.filter((item) => {
-      for (const key in query) {
-        if (item[key] !== query[key]) {
+    let obj = await this.get(path);
+    const targetIndex = obj.findIndex(item => {
+      for (const key in filter) {
+        if (item[key] !== filter[key]) {
           return false;
         }
       }
       return true;
     });
+
     
-    console.log(filteredItems)
-    return filteredItems;
-  }
-
-  async update(collectionName, query = {}, changes = {}) {
-    const collection = this.db[collectionName] || [];
-
-    // Apply the query filter
-    const filteredItems = collection.filter((item) => {
-      for (const key in query) {
-        if (item[key] !== query[key]) {
-          return false;
-        }
-      }
+    if (targetIndex !== -1) {
+      obj[targetIndex] = { ...obj[targetIndex], ...newValues };
+      await this.set(path, obj)
       return true;
-    });
-
-    if (filteredItems.length === 0) {
-      throw new Error('Items matching query not found');
     }
-
-    // Encrypt fields marked for encryption (fields starting with "encrypt_")
-    for (const field in changes) {
-      if (field.startsWith('encrypt_')) {
-        const encryptedValue = this.encrypt(changes[field]);
-        changes[field] = encryptedValue;
-      }
-    }
-
-    // Update the items
-    filteredItems.forEach((item) => {
-      for (const key in changes) {
-        item[key] = changes[key];
-      }
-      item.$updatedAt = new Date().toISOString();
-    });
-
-    await this.saveDatabase();
-    return filteredItems;
+  
+    return false;
   }
-
-  async delete(collectionName, query = {}) {
-    const collection = this.db[collectionName] || [];
-
-    // Apply the query filter
-    const filteredItems = collection.filter((item) => {
-      for (const key in query) {
-        if (item[key] !== query[key]) {
-          return false;
-        }
-      }
-      return true;
-    });
-
-    if (filteredItems.length === 0) {
-      throw new Error('Items matching query not found');
-    }
-
-    // Remove the items from the collection
-    this.db[collectionName] = collection.filter((item) => !filteredItems.includes(item));
-    await this.saveDatabase();
-    return filteredItems;
-  }
-
-  async dropCollection(collectionName) {
-    delete this.db[collectionName];
-    await this.saveDatabase();
-  }
-
-  async clearCollection(collectionName) {
-    this.db[collectionName] = [];
-    await this.saveDatabase();
-  }
-
-  async dropDatabase() {
-    this.db = {};
-    await this.saveDatabase();
-  }
+  
 }
 
-module.exports = JBase;
+// async function run() {
+//   let db = new JBase('db.sqlite3');
+//   db.intialize();
 
-
-// Previous version which was using bad.db
-
-// const BadDb = require('bad.db');
-
-// class JBase {
-//   constructor(filename = 'db.json') {
-//     this.db = null;
-//     this.filename = filename;
-//   }
-
-//   encrypt() {
-//     return
-//   }
-
-//   decrypt() {
-//     return
-//   }
-
-//   async initialize() {
-//     this.db = await BadDb(this.filename);
-//   }
-
-//   async create(collectionName, item, options = {}) {
-//     return await this.db(collectionName).create(item, options);
-//   }
-
-//   async read(collectionName, query = {}, options = {}) {
-//     return await this.db(collectionName).read(query, options);
-//   }
-
-//   async update(collectionName, query = {}, changes = {}, options = {}) {
-//     return await this.db(collectionName).update(query, changes, options);
-//   }
-
-//   async delete(collectionName, query = {}, options = {}) {
-//     return await this.db(collectionName).delete(query, options);
-//   }
-
-//   async dropCollection(collectionName) {
-//     await this.db(collectionName).drop();
-//   }
-
-//   async clearCollection(collectionName) {
-//     await this.db(collectionName).clear();
-//   }
-
-//   async dropDatabase() {
-//     await this.db.drop();
-//   }
+//   console.log(await db.get('t1'))
+//   console.log('------------------------------')
+//   // await db.update('t1', { ID: 101 }, { ID: 101, name: 'Dratini'})
+//   console.log('------------------------------')
+//   console.log(await db.get('t1'))
 // }
-
-// module.exports = JBase;
+// run()
