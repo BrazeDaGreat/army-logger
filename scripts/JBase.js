@@ -91,6 +91,8 @@ class JBase {
   
 }
 
+module.exports = JBase
+
 // async function run() {
 //   let db = new JBase('db.sqlite3');
 //   db.intialize();
