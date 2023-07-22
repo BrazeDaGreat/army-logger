@@ -128,8 +128,15 @@ function generateLeaveStats(obj) {
   if (leaveStatsElement) {
     for (const [location, count] of Object.entries(countByLocation)) {
       html.push(`
+      <!--
         <h6 class="text-success pt-1 fw-bold">${count}</h6>
         <span class="text-muted small pt-2 ps-1">@ <b>${location}</b></span>
+      -->
+      <span class="pt-1" style="font-size: 1.25rem;">
+        <span class="text-success fw-bolder">${count}</span> @ <span class="text-muted fw-bold">${location}</span>
+      </span>
+        
+        <br>
       `);
     }
     leaveStatsElement.outerHTML = html.join("");

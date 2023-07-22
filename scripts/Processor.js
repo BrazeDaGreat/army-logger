@@ -41,6 +41,8 @@ async function process(file, dbType, db) {
     data.forEach(async elmnt => {
         elmnt = convertDatesToUnixTimestamps(elmnt)
         ret.push(elmnt)
+
+        if (elmnt["Phone"]) { elmnt["Phone"] = String(elmnt["Phone"]) }
     });
 
     // await csvimport.process()

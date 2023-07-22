@@ -1,7 +1,20 @@
 async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], attr="", feedable=true) {
     // const data = await node.call('read', collection, qu, {});
     const data = await db.filter(collection, qu)
-    if (data == null || data == undefined || data == false) return;
+    if (data == null || data == undefined || data == false) {
+      let tdata = await db.get(collection)
+      if (feedable == true) {
+        if (sessionStorage.getItem('permissions').includes('@feed-data') || sessionStorage.getItem('permissions').includes('@admin')) {
+          let thtml = `<br><button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modal" onclick="createData('${collection}', ${JSON.stringify(Object.keys(tdata[0])).replace(/"/g, '\'')})">
+          <i class="bi bi-plus-circle"></i> New Data
+          </button><br>`
+          const element = document.getElementById(id);
+          if (!element) return;
+          element.innerHTML = thtml;
+          return
+        }
+      }
+    }
     // console.log(data)
     if (data.length == 0) return
     const element = document.getElementById(id);
@@ -27,8 +40,11 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
       tableHTML += '</tr></thead><tbody>';
   
       // Generate table rows
+      // console.log(data)
       for (const item of data) {
-        console.log(item)
+        if (collection == 't2') {
+          console.log(item)
+        }
         tableHTML += '<tr>';
         if (sessionStorage.getItem('permissions').includes("@admin")) {
           tableHTML += `
@@ -39,7 +55,6 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
             </button>
           </td>
           `
-
         }
 
         for (const key in item) {
@@ -65,7 +80,7 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
     tableHTML += '</table>';
     if (feedable == true) {
       if (sessionStorage.getItem('permissions').includes('@feed-data') || sessionStorage.getItem('permissions').includes('@admin')) {
-        tableHTML += `<br><button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modal" onclick="feedData('${collection}', ${JSON.stringify(Object.keys(data[0])).replace(/"/g, '\'')})">
+        tableHTML += `<br><button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#modal" onclick="createData('${collection}', ${JSON.stringify(Object.keys(data[0])).replace(/"/g, '\'')})">
         <i class="bi bi-plus-circle"></i> New Data
         </button><br>`
       }

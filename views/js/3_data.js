@@ -48,8 +48,13 @@ function getNewData(dat) {
   const newdat = {};
   fields.forEach((field) => {
     let value = document.getElementById(`editValue__${field}`).value;
+    // value = getTypeFormat(value, getType(field))
+    console.log(value)
+    if (field === "ID") {
+      value = Number(value)
+    }
     if (field === "DOB" || field === "DOE" || field === "Date_Left" || field === "Date_Back") {
-      value = convertToUnix(value);
+      value = Number(convertToUnix(value));
     }
     newdat[field.split("_").join(" ")] = value;
   });
@@ -77,7 +82,8 @@ async function updateData(collection, dat) {
  */
 async function editValues(collection, dat) {
   // const data = (await node.call("read", collection, dat))[0];
-  const data = (await db.read(collection))[0];
+  // const data = (await db.read(collection))[0];
+  const data = dat;
   const fields = Object.keys(data);
   // if (fields.includes("$id")) {
   //   fields.pop();
@@ -128,7 +134,7 @@ async function createData(collection, fields) {
         // await node.call('create', collection, getNewData(fields));
         await db.push(collection, getNewData(fields))
         console.log( {collection, fields: getNewData(fields) } )
-        // window.location.reload();
+        window.location.reload();
       }),
       Modal.close("Cancel"),
     ]
@@ -163,7 +169,7 @@ Modal.create(
     Modal.button("Save", "btn-outline-warning", "modalSave", async () => {
       // await node.call('create', collection, getNewData(fields));
       await db.push(collection, getNewData(fields))
-      window.location.reload();
+      // window.location.reload();
     }),
     Modal.close("Cancel"),
   ]
