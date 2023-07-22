@@ -16,7 +16,7 @@ class JBase {
     this.filepath = filepath;
   }
 
-  intialize() {
+  initialize() {
     this.db = new QuickDB({ filePath: this.filepath })
     console.log('Initialized ', this.filepath)
   }
@@ -34,6 +34,7 @@ class JBase {
   // Filtering
   async filter(path, filter) {
     let dat = await this.get(path);
+    if (dat == null) return;
     let ret = dat.filter(item => {
       for (const key in filter) { if (item[key] !== filter[key]) { return false } }
       return true

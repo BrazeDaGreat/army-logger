@@ -197,7 +197,7 @@ async function loadFromFile() {
         let dbType = document.getElementById("dbType").value;
         let path = inputfile[0].path
 
-        await node.load(path, dbType)
+        await csvimport.process(path, dbType)
 
         window.location.reload()
       }),

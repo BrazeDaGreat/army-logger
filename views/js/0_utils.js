@@ -110,6 +110,7 @@ function formatAge(dob) {
  * @param {DataObject[]} obj - The leave data.
  */
 function generateLeaveStats(obj) {
+  if (obj == null || obj == {}) return;
   const lastLocations = {};
   for (const { ID, Location } of obj) {
     lastLocations[ID] = Location;
@@ -140,29 +141,33 @@ function generateLeaveStats(obj) {
 async function render() {
   // const leaveData = await node.call('read', 't6');
   const leaveData = await db.read('t6');
-  console.log(leaveData)
-  generateLeaveStats(leaveData);
+  if (!(leaveData == null || leaveData == {})) {
+    generateLeaveStats(leaveData);
+  }
 
   // const userData = await node.call('read', 't1');
   const userData = await db.read('t1');
+  if (userData == null || userData == {}) return;
   // const courseData = await node.call('read', 't2');
   const courseData = await db.read('t2');
-  setElement("userStats", `
-    <div class="d-flex align-items-center">
-      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-        <i class="bi bi-people-fill"></i>
+  if (!(courseData == null || courseData == {})) {
+    setElement("userStats", `
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <h6 class="text-primary pt-1 fw-bold ps-3">${userData.length}</h6>
+        <span class="text-muted small pt-2 ps-1">Users</span>
       </div>
-      <h6 class="text-primary pt-1 fw-bold ps-3">${userData.length}</h6>
-      <span class="text-muted small pt-2 ps-1">Users</span>
-    </div>
-    <div class="d-flex align-items-center">
-      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-        <i class="bi bi-book-half"></i>
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-book-half"></i>
+        </div>
+        <h6 class="text-success pt-1 ps-3 fw-bold">${courseData.length}</h6>
+        <span class="text-muted small pt-2 ps-1">Courses</span>
       </div>
-      <h6 class="text-success pt-1 ps-3 fw-bold">${courseData.length}</h6>
-      <span class="text-muted small pt-2 ps-1">Courses</span>
-    </div>
-  `);
+    `);
+  }
 
   displayTable('t1', 'tabledata', {}, ["Permanent Address", "Current Address", "BTY"]);
   document.getElementById("userEmail").outerHTML = sessionStorage.getItem('email');

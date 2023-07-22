@@ -1,6 +1,14 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path')
 
+
+let libs = [
+  require("electron-rebuild"),
+  require("better-sqlite3"),
+  require("convert-csv-to-array"),
+  require("quick.db")
+]
+
 function createWindow() {
   // Create the browser window
   let mainWindow = new BrowserWindow({

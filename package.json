@@ -10,13 +10,12 @@
   "author": "Braze Dev",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^25.0.0"
+    "electron": "^25.0.0",
+    "electron-rebuild": "^3.2.9"
   },
   "dependencies": {
-    "bad.db": "^0.0.3",
     "better-sqlite3": "^8.5.0",
     "convert-csv-to-array": "^1.0.3",
-    "crypto": "^1.0.1",
     "quick.db": "^9.1.7"
   }
 }

@@ -6,16 +6,15 @@ async function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    const userCredentials = {
-        email: email,
-        password: password,
-    };
-
-    const data = await node.creds('read', 'credentials', userCredentials);
-    if (data.length > 0) {
+    if (!await creds.exists(email)) {
+        return alertBox("Email doesn't exist.")
+    }
+    // const data = creds.filter(userCredentials)
+    let data = await creds.get(email)
+    if (data.password == password) {
         sessionStorage.setItem('loggedIn', 'true');
         sessionStorage.setItem('email', email);
-        sessionStorage.setItem('permissions', data[0].permissions.join(","));
+        sessionStorage.setItem('permissions', data.permissions.join(","));
         window.location.href = './dashboard.html';
     } else {
         alertBox("Wrong email or password.");
