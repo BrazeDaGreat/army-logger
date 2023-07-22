@@ -62,6 +62,7 @@ function setElement(id, html) {
  * @returns {string} - The formatted date string.
  */
 function formatTime(unix, ymd = false) {
+  if (unix == "-") return "N/A";
   const date = new Date(unix * 1000);
   const day = date.getDate();
   const month = date.getMonth() + 1; // Months are zero-based
@@ -82,6 +83,7 @@ function formatTime(unix, ymd = false) {
  * @returns {string} - The formatted age string.
  */
 function formatAge(dob) {
+  if (dob == "-") return "N/A";
   const now = new Date();
   const birthDate = new Date(dob * 1000);
 

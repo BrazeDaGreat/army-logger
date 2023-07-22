@@ -22,9 +22,7 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
       }
       for (const key in data[0]) {
         if (omit.includes(key)) { continue }
-        if (key !== "$id" && key !== "$createdAt" && key !== "$updatedAt") {
-          tableHTML += '<th scope="col">' + key + '</th>';
-        }
+        tableHTML += '<th scope="col">' + key + '</th>';
       }
       tableHTML += '</tr></thead><tbody>';
   
@@ -55,9 +53,7 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
             tableHTML += '<td>'+ formatTime(item[key]) +'</td>'
             continue
           }
-          if (key !== "$id" && key !== "$createdAt" && key !== "$updatedAt") {
-            tableHTML += '<td>' + item[key] + '</td>';
-          }
+          tableHTML += '<td>' + item[key] + '</td>';
         }
         tableHTML += '</tr></tbody>';
       }

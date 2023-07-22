@@ -27,6 +27,7 @@ function getType(field) {
  * @returns {string} - The Unix timestamp.
  */
 function convertToUnix(string) {
+  if (string == "-") return "-";
   const date = new Date(string);
   const unixTime = Math.floor(date.getTime() / 1000).toString();
   return unixTime;
@@ -39,10 +40,10 @@ function convertToUnix(string) {
  */
 function getNewData(dat) {
   const fields = Array.isArray(dat) ? dat.join("||SEP||").split(" ").join("_").split("||SEP||") : Object.keys(dat).join("||SEP||").split(" ").join("_").split("||SEP||");
-  fields.splice(fields.length - 2, 2);
-  if (fields.includes("$id")) {
-    fields.splice(fields.length - 1, 1);
-  }
+  // fields.splice(fields.length - 2, 2);
+  // if (fields.includes("$id")) {
+  //   fields.splice(fields.length - 1, 1);
+  // }
 
   const newdat = {};
   fields.forEach((field) => {
@@ -77,10 +78,10 @@ async function updateData(collection, dat) {
 async function editValues(collection, dat) {
   // const data = (await node.call("read", collection, dat))[0];
   const data = (await db.read(collection))[0];
-  const fields = Object.keys(data).slice(0, -2);
-  if (fields.includes("$id")) {
-    fields.pop();
-  }
+  const fields = Object.keys(data);
+  // if (fields.includes("$id")) {
+  //   fields.pop();
+  // }
 
   const desc = fields.map((field) => {
     let value = data[field];
@@ -140,10 +141,10 @@ async function createData(collection, fields) {
  * @returns {Promise<void>} - A Promise that resolves when the data entry is created.
  */
 async function feedData(collection, fields) {
-fields = fields.slice(0, -2);
-if (fields.includes("$id")) {
-  fields.pop();
-}
+// fields = fields.slice(0, -2);
+// if (fields.includes("$id")) {
+//   fields.pop();
+// }
 
 const desc = fields.map((field) => {
   const type = getType(field);

@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld('db', {
     push: (path, value) => db.push(path, value),
     pull: (path, value) => db.pull(path, value),
     has: (path, value) => db.has(path, value),
+    update: (path, filter, value) => db.update(path, filter, value),
 
     filter: (path, filter) => db.filter(path, filter),
     exists: (path) => db.exists(path),
