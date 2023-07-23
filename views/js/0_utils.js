@@ -191,4 +191,6 @@ async function render() {
       </li>`
     );
   }
+
+  renderHighlights()
 }
