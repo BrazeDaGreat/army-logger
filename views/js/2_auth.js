@@ -6,11 +6,11 @@ async function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    if (!await creds.exists(email)) {
+    if (!await creds.exists(`accounts.${email}`)) {
         return alertBox("Email doesn't exist.")
     }
     // const data = creds.filter(userCredentials)
-    let data = await creds.get(email)
+    let data = await creds.get(`accounts.${email}`)
     if (data.password == password) {
         sessionStorage.setItem('loggedIn', 'true');
         sessionStorage.setItem('email', email);

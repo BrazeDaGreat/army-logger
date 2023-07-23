@@ -10,17 +10,19 @@ const PERMISSIONS = [
  * @returns {Promise<void>} - A Promise that resolves when the rendering is complete.
  */
 async function renderAdmin() {
-    const creds = await node.creds('read', 'credentials');
-    renderAccounts(creds, PERMISSIONS, "adminAccounts");
+    // const creds = await node.creds('read', 'credentials');
+    // const credsVar = await creds.get('')
+    const credsVar = await creds.get('accounts');
+    renderAccounts(credsVar, PERMISSIONS, "adminAccounts");
 }
 
 /**
  * Renders the accounts data with the provided credentials and permissions list.
- * @param {Account[]} creds - The array of account credentials.
+ * @param {Account[]} credsVar - The array of account credentials.
  * @param {string[]} permsList - The list of available permissions.
  * @param {string} id - The ID of the container element to render the accounts.
  */
-function renderAccounts(creds, permsList, id) {
+function renderAccounts(credsVar, permsList, id) {
     const container = document.getElementById(id);
     if (!container) {
       console.error(`Element with ID '${id}' not found.`);
@@ -28,15 +30,18 @@ function renderAccounts(creds, permsList, id) {
     }
   
     function getDelete(email) {
-      if (email !== "admin@ex.com") {
+      // if (email !== "admin@ex.com") {
+      if (email !== "admin") {
         return `<a class='btn btn-danger' href="#" onclick="deleteAccount('${email}')">Delete</a>`;
       }
       return `<a class='btn btn-danger disabled' href="#">Delete</a>`;
     }
   
     // Create the html
-    const html = creds.map((account) => {
-      const { email, password, permissions } = account;
+    // const html = credsVar.map((account) => {
+    const html = Object.keys(credsVar).map((account) => {
+      let email = account
+      const { password, permissions } = credsVar[account];
   
       const permissionsHTML = permsList.map((perm) => {
         return `
@@ -67,8 +72,8 @@ function renderAccounts(creds, permsList, id) {
               <div class="row">
                 <div class="col-6">
                   <div class="">
-                    <label for="email_${email}" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email_${email}" value="${email}">
+                    <label for="email_${email}" class="form-label">Username</label>
+                    <input disabled type="text" class="form-control" id="email_${email}" value="${email}">
                   </div>
                   <div class="">
                     <label for="password_${email}" class="form-label">Password</label>
@@ -95,7 +100,7 @@ function renderAccounts(creds, permsList, id) {
  * @returns {Promise<void>} - A Promise that resolves when the account is deleted.
  */
 async function deleteAccount(email) {
-    await node.creds('delete', 'credentials', { email: email });
+    await creds.delete(`accounts.${email}`)
     window.location.reload();
 }
 
@@ -104,24 +109,19 @@ async function deleteAccount(email) {
  * @returns {Promise<void>} - A Promise that resolves when the settings are saved.
  */
 async function saveSettings() {
-    const creds = await node.creds('read', 'credentials');
-    const updatedSettings = creds.map(async (account) => {
-        const { email } = account;
-        const emailInput = document.getElementById(`email_${email}`);
-        const passwordInput = document.getElementById(`password_${email}`);
-        const checkboxes = document.querySelectorAll(`input[type="checkbox"][email="${email}"]:checked`);
+    const credsVar = await creds.get('accounts');
 
-        const newSettings = {
-        email: emailInput.value,
+    const settings = {}
+    Object.keys(credsVar).forEach(email => {
+      let emailInput = document.getElementById(`email_${email}`);
+      const passwordInput = document.getElementById(`password_${email}`);
+      const checkboxes = document.querySelectorAll(`input[type="checkbox"][email="${email}"]:checked`);
+      settings[emailInput.value] = {
         password: passwordInput.value,
         permissions: Array.from(checkboxes).map((checkbox) => checkbox.getAttribute('perm'))
-        };
-
-        await node.creds('delete', 'credentials', { email: email });
-        await node.creds('create', 'credentials', newSettings);
-    });
-
-    await Promise.all(updatedSettings);
+      }
+    })
+    await creds.set('accounts', settings);
 
     location.reload()
 }
@@ -136,8 +136,8 @@ async function newAccount() {
         [
         `
         <div class="mb-3">
-            <label class="form-label">Email address</label>
-            <input type="email" class="form-control" id="modalEmail">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" id="modalEmail">
         </div>
         <div class="mb-3">
             <label class="form-label">Password</label>
@@ -148,7 +148,8 @@ async function newAccount() {
         [Modal.button("Create", "btn-outline-success", 'modalCreateAccount', async () => {
         const email = document.getElementById('modalEmail').value;
         const pass = document.getElementById('modalPass').value;
-        await node.creds('create', 'credentials', { email: email, password: pass, permissions: [] });
+        // await node.creds('create', 'credentials', { email: email, password: pass, permissions: [] });
+          await creds.set(`accounts.${email}`, { password: pass, permissions: []})
         window.location.reload();
         }), Modal.close("Cancel")]
     );

@@ -25,6 +25,7 @@ class JBase {
   // Setters and Getters
   async set(path, value) { return await this.db.set(path, value) }
   async get(path) { return await this.db.get(path) }
+  async delete(path) { return await this.db.delete(path) }
 
   // Array functions
   async push(path, value) { return await this.db.push(path, value) }

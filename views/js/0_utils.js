@@ -181,7 +181,7 @@ async function render() {
   displayTable('t1', 'tabledata', {}, ["Permanent Address", "Current Address", "BTY"]);
   document.getElementById("userEmail").outerHTML = sessionStorage.getItem('email');
 
-  if (sessionStorage.getItem('email') === "admin@ex.com") {
+  if (sessionStorage.getItem('email') === "admin") {
     setElement("adminDashboard",
       `<li class="nav-item">
         <a class="nav-link collapsed" href="./admin.html">

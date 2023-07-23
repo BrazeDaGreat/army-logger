@@ -22,6 +22,7 @@ contextBridge.exposeInMainWorld('db', {
     pull: (path, value) => db.pull(path, value),
     has: (path, value) => db.has(path, value),
     update: (path, filter, value) => db.update(path, filter, value),
+    delete: (path) => db.delete(path),
 
     filter: (path, filter) => db.filter(path, filter),
     exists: (path) => db.exists(path),
@@ -36,6 +37,7 @@ contextBridge.exposeInMainWorld('creds', {
     push: (path, value) => creds.push(path, value),
     pull: (path, value) => creds.pull(path, value),
     has: (path, value) => creds.has(path, value),
+    delete: (path) => creds.delete(path),
 
     filter: (path, filter) => creds.filter(path, filter),
     exists: (path) => creds.exists(path),
