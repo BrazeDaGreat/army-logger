@@ -7,11 +7,11 @@ async function reloadUserTable() {
   if (n.length < 1 || n === "") {
     displayTable('t1', 'tabledata', { }, ["Permanent Address", "Current Address", "BTY"]);
   } else {
-    let x = await db.filter('t1', { Name: n })
-    if (x.length < 1 || x == false) {
-      displayTable('t1', 'tabledata', { }, ["Permanent Address", "Current Address", "BTY"]);
-    } else {
-      displayTable('t1', 'tabledata', { Name: n }, ["Permanent Address", "Current Address", "BTY", "Phone"])
-    }
+    displayTable('t1', 'tabledata', {}, ["Permanent Address", "Current Address", "BTY", "Phone"], "", true, true, async (v) => {
+      let name = v["Name"].toLowerCase()
+      let id = n.toLowerCase()
+      if (name.startsWith(id)) return true;
+      return false;
+    })
   }
 }
