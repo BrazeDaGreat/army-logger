@@ -1,4 +1,4 @@
-async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], attr="", feedable=true) {
+async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], attr="", feedable=true, editable=true, filterfunc=(v) => true) {
     // const data = await node.call('read', collection, qu, {});
     const data = await db.filter(collection, qu)
     if (data == null || data == undefined || data == false) {
@@ -30,7 +30,7 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
     if (Array.isArray(data)) {
       // Generate table headers
       tableHTML += '<thead><tr>';
-      if (sessionStorage.getItem('permissions').includes("@admin")) {
+      if (sessionStorage.getItem('permissions').includes("@admin") && editable == true) {
         tableHTML += '<th scope="col">Edit</th>'
       }
       for (const key in data[0]) {
@@ -42,11 +42,12 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
       // Generate table rows
       // console.log(data)
       for (const item of data) {
+        if (!(await filterfunc(item))) continue;
         if (collection == 't2') {
           console.log(item)
         }
         tableHTML += '<tr>';
-        if (sessionStorage.getItem('permissions').includes("@admin")) {
+        if (sessionStorage.getItem('permissions').includes("@admin") && editable == true) {
           tableHTML += `
           <td>
             <button
@@ -60,6 +61,7 @@ async function displayTable(collection = 't1', id='tabledata', qu={}, omit=[], a
         for (const key in item) {
           
           if (omit.includes(key)) { continue }
+          if (!(await filterfunc(item))) continue;
           if (key == "ID") {
             tableHTML += '<th scope="row"><a href="#" onclick=\'showProfile("'+ item[key] +'")\'>'+ item[key] +'</a></th>'
             continue
