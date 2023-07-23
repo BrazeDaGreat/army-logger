@@ -1,8 +1,18 @@
+process.once('loaded', () => {
 const { contextBridge } = require('electron')
 const JBase = require('./scripts/JBase.js')
 const Processor = require('./scripts/Processor.js')
-const db = new JBase('db/main.db');
-const creds = new JBase('db/creds.db');
+var fs = require('fs');
+
+/* Creating file if it doesn't exist
+ */
+var dir = `${process.env.APPDATA}/ArmyLogger`;
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
+
+const db = new JBase(`${process.env.APPDATA}/ArmyLogger/main.db`)
+const creds = new JBase(`${process.env.APPDATA}/ArmyLogger/creds.db`)
 
 function init() {
     db.initialize()
@@ -43,4 +53,6 @@ contextBridge.exposeInMainWorld('creds', {
     exists: (path) => creds.exists(path),
     getOmit: (path, omit) => creds.getOmit(path, omit),
     filterOmit: (path, filter, omit) => creds.filterOmit(path, filter, omit)
+})
+
 })

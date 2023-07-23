@@ -1,6 +1,6 @@
 {
   "name": "armymanagement",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Management software.",
   "main": "main.js",
   "scripts": {
@@ -11,9 +11,10 @@
   "author": "Uzair Dev",
   "license": "ISC",
   "devDependencies": {
+    "@electron-forge/plugin-webpack": "^6.2.1",
     "electron": "^25.0.0",
-    "electron-rebuild": "^3.2.9",
-    "electron-builder": "^24.4.0"
+    "electron-builder": "^24.4.0",
+    "electron-rebuild": "^3.2.9"
   },
   "dependencies": {
     "better-sqlite3": "^8.5.0",
@@ -26,6 +27,35 @@
     "win": {
       "target": "portable",
       "publisherName": "Uzair Dev"
+    }
+  },
+  "files": [
+    "**",
+    "preload.js"
+  ],
+  "config": {
+    "forge": {
+      "plugins": [
+        {
+          "name": "@electron-forge/plugin-webpack",
+          "config": {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "name": "main_window",
+                  "html": "./views/index.html",
+                  "js": "./src/js/0_utils.js",
+                  "preload": {
+                    "js": "./preload.js"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   }
 }

@@ -13,8 +13,11 @@ function createWindow() {
   let mainWindow = new BrowserWindow({
     width: 1024,
     height: 786,
+    autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      // preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(app.getAppPath(), 'preload.js'),
       nodeIntegration: true
     }
   });

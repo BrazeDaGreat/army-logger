@@ -15,10 +15,8 @@ Now to run, just open `exec.bat`.
 Once a release is out for public, it's released on the Releases page.<br>
 **NOTE**: Minor updates are not released.
 
-# Todo
-- [ ] Migrate away from file-based database.
-    - File based database is never a good idea. So would have to do some research about it because I can't use mongodb for this specific project.
-- [ ] Create a stable build.
-    - Current build is really unstable and buggy. Most of the bugs are caused by the file-based database.
-- [ ] Extend functionality and features.
-    - Adding features such as a purpose to the Recent Activities section.
+# Release History
+### 0.16.0 (`2023.07.23`)
+- Migrated to `quick.db` (which uses `better-sqlite3` under the hood.)
+- All the bugs arising from the database shifting were fixes.
+- Changed emails to usernames.
