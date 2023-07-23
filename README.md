@@ -20,3 +20,4 @@ Once a release is out for public, it's released on the Releases page.<br>
 - Migrated to `quick.db` (which uses `better-sqlite3` under the hood.)
 - All the bugs arising from the database shifting were fixes.
 - Changed emails to usernames.
+- Databases are now stored in `%appdata%/ArmyLogger`
