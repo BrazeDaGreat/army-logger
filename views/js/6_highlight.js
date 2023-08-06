@@ -12,6 +12,14 @@ function highlightSection(label, content, color="red") {
   `
 }
 
+function highlightButton(onclick="", icon="window-plus") {
+  return `<button onclick="${onclick}" data-bs-toggle="modal" data-bs-target="#modal" class='btn btn-dark' style="padding: 0px; margin:0px; width: 80%"><i class="bi bi-${icon}"></i></button>`
+}
+
+function highlightSpan(text) {
+  return `<span class="badge bg-dark">${text}</span>`
+}
+
 async function renderHighlights() {
   let elmnt = document.getElementById("highlightActivity")
   elmnt.innerHTML = ""
@@ -37,12 +45,16 @@ async function renderHighlights() {
   // Leave stats
   for (const [remark, count] of Object.entries(countByRemarks)) {
     elmnt.innerHTML += highlightSection(
-      `<button onclick="openLeaveRemark(${count},'${remark}')" data-bs-toggle="modal" data-bs-target="#modal" class='btn btn-dark' style="padding: 0px; margin:0px; width: 80%"><i class="bi bi-window-plus"></i></button>`,
+      highlightButton(`openLeaveRemark(${count},'${remark}')`),
       `<span class="badge bg-dark">${count} @ ${remark}</span>`,
       "#5499C7"
     )
   }
 
+
+  /* Leave Time */
+  elmnt.innerHTML += highlightSection("", highlightSpan("Hello"), "lightgreen")
+  
 
 
   // elmnt.innerHTML += highlightSection("10m ago", "hlo awaaz aarhi ha", "blue")
